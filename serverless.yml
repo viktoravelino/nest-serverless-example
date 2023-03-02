@@ -9,6 +9,9 @@ custom:
 
 provider:
   name: aws
+  deploymentMethod: direct
+  stage: prod
+  region: ca-central-1
   runtime: nodejs14.x
 
 functions:
