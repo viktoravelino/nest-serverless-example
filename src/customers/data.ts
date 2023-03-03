@@ -1,0 +1,86 @@
+export default [
+  {
+    id: 1,
+    email: 'johndoe@example.com',
+    firstName: 'John',
+    lastName: 'Doe',
+  },
+  {
+    id: 2,
+    email: 'janedoe@example.com',
+    firstName: 'Jane',
+    lastName: 'Doe',
+  },
+  {
+    id: 3,
+    email: 'bobsmith@example.com',
+    firstName: 'Bob',
+    lastName: 'Smith',
+  },
+  {
+    id: 4,
+    email: 'sarahjones@example.com',
+    firstName: 'Sarah',
+    lastName: 'Jones',
+  },
+  {
+    id: 5,
+    email: 'mikebrown@example.com',
+    firstName: 'Mike',
+    lastName: 'Brown',
+  },
+  {
+    id: 6,
+    email: 'amandasmith@example.com',
+    firstName: 'Amanda',
+    lastName: 'Smith',
+  },
+  {
+    id: 7,
+    email: 'chrisjohnson@example.com',
+    firstName: 'Chris',
+    lastName: 'Johnson',
+  },
+  {
+    id: 8,
+    email: 'lisaadams@example.com',
+    firstName: 'Lisa',
+    lastName: 'Adams',
+  },
+  {
+    id: 9,
+    email: 'davidsmith@example.com',
+    firstName: 'David',
+    lastName: 'Smith',
+  },
+  {
+    id: 10,
+    email: 'mariaperez@example.com',
+    firstName: 'Maria',
+    lastName: 'Perez',
+  },
+  {
+    id: 11,
+    email: 'jessicabaker@example.com',
+    firstName: 'Jessica',
+    lastName: 'Baker',
+  },
+  {
+    id: 12,
+    email: 'ryanlee@example.com',
+    firstName: 'Ryan',
+    lastName: 'Lee',
+  },
+  {
+    id: 13,
+    email: 'johncarter@example.com',
+    firstName: 'John',
+    lastName: 'Carter',
+  },
+  {
+    id: 14,
+    email: 'caroldavis@example.com',
+    firstName: 'Carol',
+    lastName: 'Davis',
+  },
+];

@@ -22,7 +22,9 @@
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/swagger": "^6.2.1",
     "@vendia/serverless-express": "^4.10.1",
     "aws-lambda": "^1.0.7",
     "reflect-metadata": "^0.1.13",
