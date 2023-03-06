@@ -1,13 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
-import customerList from './data';
+import customerList from './customers';
 import { Customer } from './entities/customer.entity';
+import { PageDto, PageMetaDto, PageOptionsDto } from 'src/common/dtos';
 
 @Injectable()
 export class CustomersService {
-  findAll(): Customer[] {
-    return customerList;
+  async findAll(pageOptionsDto: PageOptionsDto): Promise<PageDto<Customer>> {
+    const count = customerList.length;
+    const pageMetaDto = new PageMetaDto({
+      itemCount: count,
+      pageOptionsDto,
+    });
+
+    return new PageDto(customerList, pageMetaDto);
   }
 
   findOne(id: number): Customer {
