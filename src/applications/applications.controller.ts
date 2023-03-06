@@ -1,20 +1,32 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
+import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response';
+import { PageOptionsDto } from 'src/common/dtos';
 import { ApplicationsService } from './applications.service';
 import { Application } from './entities/application.entity';
 
 @Controller('applications')
+@UseInterceptors(ClassSerializerInterceptor)
 export class ApplicationsController {
   constructor(private readonly applicationsService: ApplicationsService) {}
 
   @Get()
-  @ApiResponse({
-    status: 200,
-    isArray: true,
-    type: Application,
-  })
-  findAll() {
-    return this.applicationsService.findAll();
+  // @ApiResponse({
+  //   status: 200,
+  //   isArray: true,
+  //   type: Application,
+  // })
+  @ApiPaginatedResponse(Application)
+  findAll(@Query() pageOptionsDto: PageOptionsDto) {
+    return this.applicationsService.findAll(pageOptionsDto);
   }
 
   @Get(':id')

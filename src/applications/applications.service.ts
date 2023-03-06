@@ -2,22 +2,36 @@ import { Injectable } from '@nestjs/common';
 import { CreateApplicationDto } from './dto/create-application.dto';
 import { UpdateApplicationDto } from './dto/update-application.dto';
 
-import applicationList from './data';
-import customerList from '../customers/data';
-import userList from '../users/data';
+import applicationList from './applications';
+import customerList from '../customers/customers';
+import userList from '../users/users';
+import { PageOptionsDto, PageDto, PageMetaDto } from 'src/common/dtos';
 
 @Injectable()
 export class ApplicationsService {
-  findAll() {
-    return applicationList.map((application) => {
-      return {
-        ...application,
-        applicant: customerList.find(
-          (applicant) => applicant.id === application.applicantId,
-        ),
-        assignee: userList.find((user) => user.id === application.assigneeId),
-      };
+  findAll(pageOptionsDto: PageOptionsDto) {
+    const count = applicationList.length;
+    const pageMetaDto = new PageMetaDto({
+      itemCount: count,
+      pageOptionsDto,
     });
+
+    return new PageDto(
+      applicationList
+        .slice(pageOptionsDto.skip, pageOptionsDto.skip + pageOptionsDto.take)
+        .map((application) => {
+          return {
+            ...application,
+            applicant: customerList.find(
+              (applicant) => applicant.id === application.applicantId,
+            ),
+            assignee: userList.find(
+              (user) => user.id === application.assigneeId,
+            ),
+          };
+        }),
+      pageMetaDto,
+    );
   }
 
   findOne(id: number) {
