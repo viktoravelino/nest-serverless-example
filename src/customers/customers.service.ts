@@ -7,17 +7,11 @@ import { PageDto, PageMetaDto, PageOptionsDto } from 'src/common/dtos';
 
 @Injectable()
 export class CustomersService {
-  async findAll(pageOptionsDto: PageOptionsDto): Promise<PageDto<Customer>> {
-    const count = customerList.length;
-    const pageMetaDto = new PageMetaDto({
-      itemCount: count,
-      pageOptionsDto,
-    });
-
-    return new PageDto(customerList, pageMetaDto);
+  async findAll(): Promise<Customer[]> {
+    return customerList;
   }
 
-  findOne(id: number): Customer {
+  async findOne(id: number): Promise<Customer> {
     return customerList.find((customer) => customer.id === id);
   }
 

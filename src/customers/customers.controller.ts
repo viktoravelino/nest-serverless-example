@@ -1,7 +1,5 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
-import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response';
-import { PageOptionsDto } from 'src/common/dtos';
 import { CustomersService } from './customers.service';
 import { Customer } from './entities/customer.entity';
 
@@ -10,14 +8,13 @@ export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
   @Get()
-  // @ApiResponse({
-  //   status: 200,
-  //   isArray: true,
-  //   type: Customer,
-  // })
-  @ApiPaginatedResponse(Customer)
-  findAll(@Query() pageOptionsDto: PageOptionsDto) {
-    return this.customersService.findAll(pageOptionsDto);
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+    type: Customer,
+  })
+  findAll() {
+    return this.customersService.findAll();
   }
 
   @Get(':id')
@@ -25,7 +22,7 @@ export class CustomersController {
     status: 200,
     type: Customer,
   })
-  findOne(@Param('id', ParseIntPipe) id: number): Customer {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.customersService.findOne(id);
   }
 
