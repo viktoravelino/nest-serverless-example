@@ -9,6 +9,8 @@ let server: Handler;
 async function bootstrap(): Promise<Handler> {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({ origin: '*' });
+
   const config = new DocumentBuilder()
     .setTitle('Fake API')
     .setDescription('Returns fake data')

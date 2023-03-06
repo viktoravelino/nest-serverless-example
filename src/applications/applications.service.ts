@@ -21,7 +21,17 @@ export class ApplicationsService {
   }
 
   findOne(id: number) {
-    return applicationList.find((application) => application.id === id);
+    const application = applicationList.find(
+      (application) => application.id === id,
+    );
+
+    return {
+      ...application,
+      applicant: customerList.find(
+        (applicant) => applicant.id === application.applicantId,
+      ),
+      assignee: userList.find((user) => user.id === application.assigneeId),
+    };
   }
 
   create(createApplicationDto: CreateApplicationDto) {
