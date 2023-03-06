@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import serverlessExpress from '@vendia/serverless-express';
@@ -10,6 +11,7 @@ async function bootstrap(): Promise<Handler> {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({ origin: '*' });
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   const config = new DocumentBuilder()
     .setTitle('Fake API')
