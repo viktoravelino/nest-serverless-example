@@ -3,16 +3,15 @@ import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import customerList from './customers';
 import { Customer } from './entities/customer.entity';
-import { PageDto, PageMetaDto, PageOptionsDto } from 'src/common/dtos';
 
 @Injectable()
 export class CustomersService {
   async findAll(): Promise<Customer[]> {
-    return customerList;
+    return customerList as Customer[];
   }
 
   async findOne(id: number): Promise<Customer> {
-    return customerList.find((customer) => customer.id === id);
+    return customerList.find((customer) => customer.id === id) as Customer;
   }
 
   create(createCustomerDto: CreateCustomerDto) {

@@ -7,23 +7,19 @@ import {
   Query,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiPaginatedResponse } from 'src/common/decorators/api-paginated-response';
 import { PageOptionsDto } from 'src/common/dtos';
 import { ApplicationsService } from './applications.service';
 import { Application } from './entities/application.entity';
 
 @Controller('applications')
+@ApiTags('Applications')
 @UseInterceptors(ClassSerializerInterceptor)
 export class ApplicationsController {
   constructor(private readonly applicationsService: ApplicationsService) {}
 
   @Get()
-  // @ApiResponse({
-  //   status: 200,
-  //   isArray: true,
-  //   type: Application,
-  // })
   @ApiPaginatedResponse(Application)
   findAll(@Query() pageOptionsDto: PageOptionsDto) {
     return this.applicationsService.findAll(pageOptionsDto);

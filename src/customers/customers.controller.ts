@@ -1,9 +1,10 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CustomersService } from './customers.service';
 import { Customer } from './entities/customer.entity';
 
 @Controller('customers')
+@ApiTags('Customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 

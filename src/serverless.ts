@@ -4,6 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import serverlessExpress from '@vendia/serverless-express';
 import { Callback, Context, Handler } from 'aws-lambda';
 import { AppModule } from './app.module';
+import { configSwagger } from './swagger';
 
 let server: Handler;
 
@@ -13,14 +14,15 @@ async function bootstrap(): Promise<Handler> {
   app.enableCors({ origin: '*' });
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  const config = new DocumentBuilder()
-    .setTitle('Fake API')
-    .setDescription('Returns fake data')
-    .setVersion('1.0')
-    .addTag('api')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  configSwagger(app);
+  // const config = new DocumentBuilder()
+  //   .setTitle('Fake API')
+  //   .setDescription('Returns fake data')
+  //   .setVersion('1.0')
+  //   .addTag('api')
+  //   .build();
+  // const document = SwaggerModule.createDocument(app, config);
+  // SwaggerModule.setup('api', app, document);
 
   await app.init();
   const expressApp = app.getHttpAdapter().getInstance();

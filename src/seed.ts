@@ -2,28 +2,18 @@ import { faker } from '@faker-js/faker';
 import { writeFileSync } from 'fs';
 
 import { User } from './users/entities/user.entity';
-import { Customer } from './customers/entities/customer.entity';
-import { Application } from './applications/entities/application.entity';
+import { Customer, RentOrOwn } from './customers/entities/customer.entity';
+import {
+  Application,
+  Priority,
+  Status,
+  SubStatus,
+} from './applications/entities/application.entity';
 
-const priorities = [
-  'blocker',
-  'critical',
-  'high',
-  'highest',
-  'low',
-  'lowest',
-  'medium',
-  'major',
-  'minor',
-  'trivial',
-] as const;
-const status = [
-  'active',
-  'fraud',
-  'fulfillment',
-  'complete',
-  'cancelled',
-] as const;
+const priorities = Object.values(Priority);
+const status = Object.values(Status);
+const subStatus = Object.values(SubStatus);
+const rentOrOwn = Object.values(RentOrOwn);
 
 const customers = [];
 const users = [];
@@ -48,16 +38,48 @@ function createUser(id: number): User {
   };
 }
 
-function createCustomer(id: number): Customer {
-  const firstName = faker.name.firstName();
-  const lastName = faker.name.lastName();
-  const email = faker.internet.email();
-
+function createCoBorrower(id: number): Customer['coBorrower'] {
   return {
     id,
-    email,
-    firstName,
-    lastName,
+    email: faker.internet.email(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    dob: faker.date.birthdate().toISOString(),
+    address: faker.address.streetAddress(),
+    atPnc: !!randomNumberBetweenMinMax(0, 1),
+    phoneNumber: faker.phone.number('1##########'),
+    ssn: faker.random.numeric(9, {
+      allowLeadingZeros: true,
+    }),
+  };
+}
+
+function createCustomer(id: number): Customer {
+  return {
+    id,
+    email: faker.internet.email(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    dob: faker.date.birthdate().toISOString(),
+    address: faker.address.streetAddress(),
+    atPnc: !!randomNumberBetweenMinMax(0, 1),
+    phoneNumber: faker.phone.number('1##########'),
+    ssn: faker.random.numeric(9, {
+      allowLeadingZeros: true,
+    }),
+    borrowerCreditFactors: {
+      creditScore: randomNumberBetweenMinMax(300, 850),
+      totalDebt: randomNumberBetweenMinMax(0, 10000000),
+    },
+    borrowerIncome: {
+      incomeSource: 'Employment',
+      jobTitle: faker.name.jobTitle(),
+      statedIncome: randomNumberBetweenMinMax(2000000, 50000000),
+    },
+    coBorrower: createCoBorrower(id + 1000000),
+    housingInformation: {
+      rentOrOwn: rentOrOwn[randomNumberBetweenMinMax(0, rentOrOwn.length - 1)],
+    },
   };
 }
 
@@ -73,7 +95,8 @@ function createApplication(
     priority: priorities[randomNumberBetweenMinMax(0, priorities.length - 1)],
     status: status[randomNumberBetweenMinMax(0, status.length - 1)],
     submittedDate: faker.date.recent().toISOString(),
-    subStatus: 'sub-status',
+    subStatus: subStatus[randomNumberBetweenMinMax(0, subStatus.length - 1)],
+    updatedAt: faker.date.recent().toISOString(),
   };
 }
 
