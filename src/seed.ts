@@ -2,7 +2,11 @@ import { faker } from '@faker-js/faker';
 import { writeFileSync } from 'fs';
 
 import { User } from './users/entities/user.entity';
-import { Customer, RentOrOwn } from './customers/entities/customer.entity';
+import {
+  Customer,
+  HomeType,
+  RentOrOwn,
+} from './customers/entities/customer.entity';
 import {
   Application,
   Priority,
@@ -14,6 +18,7 @@ const priorities = Object.values(Priority);
 const status = Object.values(Status);
 const subStatus = Object.values(SubStatus);
 const rentOrOwn = Object.values(RentOrOwn);
+const homeType = Object.values(HomeType);
 
 const customers = [];
 const users = [];
@@ -70,15 +75,20 @@ function createCustomer(id: number): Customer {
     borrowerCreditFactors: {
       creditScore: randomNumberBetweenMinMax(300, 850),
       totalDebt: randomNumberBetweenMinMax(0, 10000000),
+      dtiAccept: randomNumberBetweenMinMax(1, 100),
     },
     borrowerIncome: {
       incomeSource: 'Employment',
       jobTitle: faker.name.jobTitle(),
       statedIncome: randomNumberBetweenMinMax(2000000, 50000000),
+      employer: faker.company.name(),
     },
     coBorrower: createCoBorrower(id + 1000000),
     housingInformation: {
       rentOrOwn: rentOrOwn[randomNumberBetweenMinMax(0, rentOrOwn.length - 1)],
+      homeType: homeType[randomNumberBetweenMinMax(0, rentOrOwn.length - 1)],
+      monthlyPayment: randomNumberBetweenMinMax(100000, 1000000),
+      numberOfYears: randomNumberBetweenMinMax(3, 10),
     },
   };
 }
@@ -97,6 +107,10 @@ function createApplication(
     submittedDate: faker.date.recent().toISOString(),
     subStatus: subStatus[randomNumberBetweenMinMax(0, subStatus.length - 1)],
     updatedAt: faker.date.recent().toISOString(),
+    limiteRequested: randomNumberBetweenMinMax(10000000, 100000000),
+    productName: 'Consumer Credit Card',
+    productType: 'Cash Rewards® Visa®',
+    referralRule: 'DTI',
   };
 }
 

@@ -5,6 +5,12 @@ export enum RentOrOwn {
   Own = 'own',
 }
 
+export enum HomeType {
+  Apartment = 'apartment',
+  Condo = 'condo',
+  House = 'house',
+}
+
 export class Customer {
   @ApiProperty({ example: 1 })
   id: number;
@@ -22,11 +28,13 @@ export class Customer {
     type: {
       creditScore: { type: 'number', example: 700 },
       totalDebt: { type: 'number', example: 10000 },
+      dtiAccept: { type: 'number', example: 65 },
     },
   })
   borrowerCreditFactors: {
     creditScore: number;
     totalDebt: number;
+    dtiAccept: number;
   };
 
   @ApiProperty({
@@ -34,12 +42,14 @@ export class Customer {
       statedIncome: { type: 'number', example: 100000 },
       incomeSource: { type: 'string', example: 'Employment' },
       jobTitle: { type: 'string', example: 'Software Engineer' },
+      employer: { type: 'string', example: 'PNC' },
     },
   })
   borrowerIncome: {
     statedIncome: number;
     incomeSource: string;
     jobTitle: string;
+    employer: string;
   };
 
   @ApiProperty({
@@ -49,10 +59,20 @@ export class Customer {
         enum: RentOrOwn,
         example: RentOrOwn.Own,
       },
+      homeType: {
+        type: 'string',
+        enum: HomeType,
+        example: HomeType.House,
+      },
+      monthlyPayment: { type: 'number', example: '150000' },
+      numberOfYears: { type: 'number', example: '4' },
     },
   })
   housingInformation: {
     rentOrOwn: RentOrOwn;
+    homeType: HomeType;
+    monthlyPayment: number;
+    numberOfYears: number;
   };
 
   @ApiProperty()

@@ -55,4 +55,16 @@ export class Application {
 
   @ApiProperty({ example: '2023-03-03' })
   updatedAt: string;
+
+  @ApiProperty({ example: 'Consumer Credit Card' })
+  productType: string;
+
+  @ApiProperty({ example: 'Cash Rewards® Visa®' })
+  productName: string;
+
+  @ApiProperty({ example: '1300000' })
+  limiteRequested: number;
+
+  @ApiProperty({ example: 'DTI' })
+  referralRule: string;
 }
