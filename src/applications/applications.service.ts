@@ -18,6 +18,11 @@ export class ApplicationsService {
 
     return new PageDto(
       applicationList
+        .sort(
+          (a, b) =>
+            new Date(b.submittedDate).getTime() -
+            new Date(a.submittedDate).getTime(),
+        )
         .slice(pageOptionsDto.skip, pageOptionsDto.skip + pageOptionsDto.take)
         .map((application) => {
           return {

@@ -104,7 +104,7 @@ function createApplication(
     assigneeId,
     priority: priorities[randomNumberBetweenMinMax(0, priorities.length - 1)],
     status: status[randomNumberBetweenMinMax(0, status.length - 1)],
-    submittedDate: faker.date.recent().toISOString(),
+    submittedDate: faker.date.past().toISOString(),
     subStatus: subStatus[randomNumberBetweenMinMax(0, subStatus.length - 1)],
     updatedAt: faker.date.recent().toISOString(),
     limiteRequested: randomNumberBetweenMinMax(10000000, 100000000),
